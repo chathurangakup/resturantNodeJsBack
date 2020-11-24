@@ -475,42 +475,42 @@ const checkAuth=require('../middleware/check-auth');
 
 
 
-// //get delete varients itemcategory
-// router.get('/deletevarients/:itemcatid/varientid/:varientid',checkAuth,(req,res,next)=>{
-// console.log(req.params.commentid)
-// const itemcatid=req.params.itemcatid
-// const varientidd=req.params.varientid
+//get delete varients itemcategory
+router.get('/deletevarients/:itemcatid/varientid/:varientid',checkAuth,(req,res,next)=>{
+console.log(req.params.commentid)
+const itemcatid=req.params.itemcatid
+const varientidd=req.params.varientid
 
-//   ItemCategories.find({ "_id": itemcatid},  function(err, result) {
-//     if (err) {
-//       res.send({'error':result});
-//   } else {
-//     console.log(result[0])
-//     //  var commentlen=result[0].commentsofusers.length;
-//      for(var i=0; i<result[0].varients.length;i++){
-//       if(result[0].varients [i].varientid==varientidd){
-//         ItemCategories.updateOne({"_id": itemcatid}, {$pull: { "varients" :  { varientid: mongoose.Types.ObjectId(varientidd) }}}, function(err, result) {
-//           console.log(err) 
-//          // console.log(result) 
-//             if (err!=null) {
-//               console.log('lkkll')
-//               res.status(401).json({error:'An error has occurred'});
-//             } else{
-//               res.status(200).json({
-//                 result:"success",
-//                 message:"Updated"
-//             });
+  ItemCategories.find({ "_id": itemcatid},  function(err, result) {
+    if (err) {
+      res.send({'error':result});
+  } else {
+    console.log(result[0])
+    //  var commentlen=result[0].commentsofusers.length;
+     for(var i=0; i<result[0].varients.length;i++){
+      if(result[0].varients [i].varientid==varientidd){
+        ItemCategories.updateOne({"_id": itemcatid}, {$pull: { "varients" :  { varientid: mongoose.Types.ObjectId(varientidd) }}}, function(err, result) {
+          console.log(err) 
+         // console.log(result) 
+            if (err!=null) {
+              console.log('lkkll')
+              res.status(401).json({error:'An error has occurred'});
+            } else{
+              res.status(200).json({
+                result:"success",
+                message:"Updated"
+            });
            
-//             } 
-//         })
-//      }
-//   }
+            } 
+        })
+     }
+  }
 
-//   }
+  }
 
-//   })
+  })
 
-// })
+})
 
 
 
