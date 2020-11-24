@@ -11,77 +11,77 @@ const Likes = require('../models/likes');
 const checkAuth=require('../middleware/check-auth');
 
 
-//save Item categories
-router.post('/addItemCategories',checkAuth,(req,res,next)=>{
+// //save Item categories
+// router.post('/addItemCategories',checkAuth,(req,res,next)=>{
    
-    if(req.body.itemid==undefined){
-        res.status(500).json({
-            error:"Please enter itemid"
-        });
-    }
-    else if(req.body.categoryname==undefined){
-        res.status(500).json({
-            error:"Please enter categoryname"
-        });
-    }else if(req.body.price==undefined){
-            res.status(500).json({
-                error:"Please enter price"
-            });
+//     if(req.body.itemid==undefined){
+//         res.status(500).json({
+//             error:"Please enter itemid"
+//         });
+//     }
+//     else if(req.body.categoryname==undefined){
+//         res.status(500).json({
+//             error:"Please enter categoryname"
+//         });
+//     }else if(req.body.price==undefined){
+//             res.status(500).json({
+//                 error:"Please enter price"
+//             });
 
-  }else if(req.body.image==undefined){
-    res.status(500).json({
-        error:"Please add image"
-    });
+//   }else if(req.body.image==undefined){
+//     res.status(500).json({
+//         error:"Please add image"
+//     });
 
-}else{
-    Items.findById(req.body.itemid)
-   .then(users=>{
-        if(!users){
-            return  res.status(404).json({
-                error:'error',
-                result:"Item not found"
+// }else{
+//     Items.findById(req.body.itemid)
+//    .then(users=>{
+//         if(!users){
+//             return  res.status(404).json({
+//                 error:'error',
+//                 result:"Item not found"
                
-            });
-        }else{
-            const itemCategories=new ItemCategories({
-                _id:mongoose.Types.ObjectId(),
-                itemid:req.body.itemid,
-                image:req.body.image,
-                categoryname:req.body.categoryname,
-                description:req.body.description,
-                varients:[],
-                comments:[],
-                price:req.body.price,
-                islike:false,
+//             });
+//         }else{
+//             const itemCategories=new ItemCategories({
+//                 _id:mongoose.Types.ObjectId(),
+//                 itemid:req.body.itemid,
+//                 image:req.body.image,
+//                 categoryname:req.body.categoryname,
+//                 description:req.body.description,
+//                 varients:[],
+//                 comments:[],
+//                 price:req.body.price,
+//                 islike:false,
               
-            });
-            itemCategories.save()
-            .then(result=>{
-                    console.log(result);
-                    res.status(201).json({
-                        result:"Success",
-                        data:result
-                    }
-                    );
-            }).catch(err=>{
-                    console.log(err);
-                    res.status(500).json({
-                        result:"error",
-                        error:err
-                    });
-            });
+//             });
+//             itemCategories.save()
+//             .then(result=>{
+//                     console.log(result);
+//                     res.status(201).json({
+//                         result:"Success",
+//                         data:result
+//                     }
+//                     );
+//             }).catch(err=>{
+//                     console.log(err);
+//                     res.status(500).json({
+//                         result:"error",
+//                         error:err
+//                     });
+//             });
     
 
-        } 
-   }) 
-        console.log('kkk')
-    }
-});
+//         } 
+//    }) 
+//         console.log('kkk')
+//     }
+// });
 
 
 
-//upload itemcategory image
-const uploadCategoryImage = async (req, res, next) => {
+// //upload itemcategory image
+// const uploadCategoryImage = async (req, res, next) => {
  
 //     try {
 //     if(res){
