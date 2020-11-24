@@ -9,8 +9,8 @@ const dataSchema=mongoose.Schema({
     price:{type:String,require:true},
     description:{type:String,require:true},
     image:{type:String,require:true},
-    isLike:{type:Boolean},
+    isLike:{type:Boolean,require:true},
   
 })
 
-module.exports = mongoose.model('Itemcategories', dataSchema);
+module.exports = mongoose.model('itemcategories', dataSchema);
