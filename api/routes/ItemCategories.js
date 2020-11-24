@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const fs = require('fs');
 
-const ItemCategories = require('../models/ItemCategories');
+const ItemCategories = require('../models/Itemcategories');
 
 const Items = require('../models/items');
 const Users = require('../models/users');

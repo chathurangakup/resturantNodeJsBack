@@ -8,7 +8,7 @@ var url="mongodb+srv://uditha:0HKByXOFJaBQOKfe@cluster0.t6pkg.mongodb.net/restur
 
 const userRoutes = require("./api/routes/users");
  const itemsRoutes = require("./api/routes/items");
- const itemcategoriesRoutes = require("./api/routes/itemCategories");
+ const itemcategoriesRoutes = require("./api/routes/Itemcategories");
 const likes = require("./api/routes/likes");
 const cart = require("./api/routes/cart");
 

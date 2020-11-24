@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const ItemsNames = require('../models/items');
 const Likes = require('../models/likes');
- const ItemCategories = require('../models/ItemCategories');
+ const ItemCategories = require('../models/Itemcategories');
  const Cart = require('../models/cart');
 const Users = require('../models/users');
 const checkAuth=require('../middleware/check-auth');
