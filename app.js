@@ -7,10 +7,10 @@ const mongoose = require("mongoose");
 var url="mongodb+srv://uditha:0HKByXOFJaBQOKfe@cluster0.t6pkg.mongodb.net/resturantdb?retryWrites=true&w=majority"
 
 const userRoutes = require("./api/routes/users");
-const itemsRoutes = require("./api/routes/items");
-const itemcategoriesRoutes = require("./api/routes/itemCategories");
-const likes = require("./api/routes/likes");
-const cart = require("./api/routes/cart");
+// const itemsRoutes = require("./api/routes/items");
+// const itemcategoriesRoutes = require("./api/routes/itemCategories");
+// const likes = require("./api/routes/likes");
+// const cart = require("./api/routes/cart");
 
 
 mongoose
@@ -46,10 +46,10 @@ app.use((req, res, next) => {
 });
 
 app.use("/users", userRoutes);
-app.use("/items",itemsRoutes)
-app.use("/itemscategory",itemcategoriesRoutes)
-app.use("/likes",likes)
-app.use("/cart",cart)
+// app.use("/items",itemsRoutes)
+// app.use("/itemscategory",itemcategoriesRoutes)
+// app.use("/likes",likes)
+// app.use("/cart",cart)
 
 
 app.use((req, res, next) => {
