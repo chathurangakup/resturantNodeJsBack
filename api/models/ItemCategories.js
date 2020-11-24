@@ -13,4 +13,4 @@ const dataSchema=mongoose.Schema({
   
 })
 
-module.exports = mongoose.model('ItemCategories', dataSchema);
+module.exports = mongoose.model('Itemcategories', dataSchema);
