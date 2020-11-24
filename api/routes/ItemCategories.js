@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const fs = require('fs');
 
-const ItemCategories = require('../models/Itemcategories');
+const ItemCategories = require('../models/itemcategories');
 
 const Items = require('../models/items');
 const Users = require('../models/users');
@@ -83,40 +83,40 @@ router.post('/addItemCategories',checkAuth,(req,res,next)=>{
 //upload itemcategory image
 const uploadCategoryImage = async (req, res, next) => {
  
-    try {
-    if(res){
-      ItemCategories.update(
-        {"_id":req.body.categoryid},
-        {$set: {
-          "image":req.body.base64image,
-         }}
-    )
-      .exec()
-    .then(docs=>{
-    if(docs){
-       //consolele.log("kki")
-       return res.status(201).json({
-        result:'success',
-        message:'Upload successfull',
-        path:req.body.base64image
-      });
-      }else{
-        res.status(404).json({
-            result:'error',
-            message:"No valid value"});
-      }
-    }).catch(err=>{
-        console.log(err)
-      });
+//     try {
+//     if(res){
+//       ItemCategories.update(
+//         {"_id":req.body.categoryid},
+//         {$set: {
+//           "image":req.body.base64image,
+//          }}
+//     )
+//       .exec()
+//     .then(docs=>{
+//     if(docs){
+//        //consolele.log("kki")
+//        return res.status(201).json({
+//         result:'success',
+//         message:'Upload successfull',
+//         path:req.body.base64image
+//       });
+//       }else{
+//         res.status(404).json({
+//             result:'error',
+//             message:"No valid value"});
+//       }
+//     }).catch(err=>{
+//         console.log(err)
+//       });
      
   
-    }
-    } catch (e) {
-        next(e);
-    }
-  }
+//     }
+//     } catch (e) {
+//         next(e);
+//     }
+//   }
   
-  router.post('/upload/categoryimage',checkAuth, uploadCategoryImage)
+//   router.post('/upload/categoryimage',checkAuth, uploadCategoryImage)
   
   
 // //get menu category by itemm id
