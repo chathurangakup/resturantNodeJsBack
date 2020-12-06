@@ -70,7 +70,7 @@ router.post('/addlikes',checkAuth,(req,res,next)=>{
               if(docs){
                  //consolele.log("kki")
                   res.status(200).json({
-                      result:"success",
+                      result:"Success",
                       message:"Updated"
                   });
                 }else{

@@ -7,6 +7,7 @@ const dataSchema=mongoose.Schema({
     faculty:{type:String,require:true},
     gender:{type:String,require:true},
     email:{type:String,require:true},
+    phoneno:{type:String,require:true},
     password:{type:String,require:true},
     date:{type:String,require:true},
     

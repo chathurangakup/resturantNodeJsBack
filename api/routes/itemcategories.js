@@ -144,16 +144,19 @@ const uploadCategoryImage = async (req, res, next) => {
                 $expr:{$eq: ['$userid', '$$userid']} 
               }}
           ],
-         
       },
-
       },//end lookup
 
       {
-        $match: {
-          itemid:  mongoose.Types.ObjectId(itemidd),
-        
-      },},
+          $match: {
+            itemid:  mongoose.Types.ObjectId(itemidd),
+          },
+      },
+    
+  //   {$project:{_id:1,varients:1, comments:1, itemid:1, image:1, categoryname:1, description: 1, price:1, likes:1,reviews:{$divide: [ { $sum:"$comments.rating" },"$count" ]}}},
+
+    { $addFields: { size:  { $size:"$comments" } }},
+    { $addFields: { review:  {$divide: [ { $sum:"$comments.rating" }, 1]}  } },
     //  { $project: {
         
     //     "likes" : {
@@ -251,54 +254,88 @@ router.get('/getalllikesitems/userid/:userid/search/:searchtxt?',(req,res,next)=
   var itemcatObj={}
   var itemcatDesc=[]
 
-  ItemCategories.aggregate([{
-    $lookup: {
-        from: "likes",
-        as: "likes",
-        // localField: "_id",
-        // foreignField: "itemcategoryid",
-        let:{itemcategoryid:'$_id',userid: mongoose.Types.ObjectId(useridd),islike:true},
-        pipeline:[
-            {$match:{
-              $expr:{$eq: ['$itemcategoryid', '$$itemcategoryid']},
-            }},
-            {$match:{
-              $expr:{$eq: ['$userid', '$$userid']} 
-            }},
-            {$match:{
-              $expr:{$eq: ['$islike', '$$islike']} 
-            }}
-        ],
-       
-    },
-
-    },//end lookup
-    {"$match":{"likes":{"$ne":[]}}},
+  console.log(searchtxt)
+  if(searchtxt==undefined){
+    ItemCategories.aggregate([{
+      $lookup: {
+          from: "likes",
+          as: "likes",
+          // localField: "_id",
+          // foreignField: "itemcategoryid",
+          let:{itemcategoryid:'$_id',userid: mongoose.Types.ObjectId(useridd),islike:true},
+          pipeline:[
+              {$match:{
+                $expr:{$eq: ['$itemcategoryid', '$$itemcategoryid']},
+              }},
+              {$match:{
+                $expr:{$eq: ['$userid', '$$userid']} 
+              }},
+              {$match:{
+                $expr:{$eq: ['$islike', '$$islike']} 
+              }}
+          ],
+         
+      },
   
-  //   {
-  //     $match: {
-  //       itemid:  mongoose.Types.ObjectId(itemidd),
-      
-  //   },
-  //  },//end match
-  //  { $project: {
-      
-  //     "likes" : {
-  //       $in: [ 'userid', useridd ]
-  //     }
-  //   }}
-     ],  function(err, result){
-        res.send({result})
-    })
-
+      },//end lookup
+      {"$match":{"likes":{"$ne":[]}}},
+      //{"$match":{"categoryname":searchtxt}}
+     // {$regexMatch: { input:"$categoryname",regex:/Egg/}} ,
+      // { $addFields: { result: { $regexMatch: { input: "$categoryname", regex:searchtxt,options: "i" } } } },
+      // {"$match":{"result":true}},
   
-
-
+  
     
+  
+       ],  function(err, result){
+           //  res.status({result})
+             res.status(200).json({result});
           
-       
-      
-      
+      })
+  
+    
+
+  }else{
+    ItemCategories.aggregate([{
+      $lookup: {
+          from: "likes",
+          as: "likes",
+          // localField: "_id",
+          // foreignField: "itemcategoryid",
+          let:{itemcategoryid:'$_id',userid: mongoose.Types.ObjectId(useridd),islike:true},
+          pipeline:[
+              {$match:{
+                $expr:{$eq: ['$itemcategoryid', '$$itemcategoryid']},
+              }},
+              {$match:{
+                $expr:{$eq: ['$userid', '$$userid']} 
+              }},
+              {$match:{
+                $expr:{$eq: ['$islike', '$$islike']} 
+              }}
+          ],
+         
+      },
+  
+      },//end lookup
+      {"$match":{"likes":{"$ne":[]}}},
+      //{"$match":{"categoryname":searchtxt}}
+     // {$regexMatch: { input:"$categoryname",regex:/Egg/}} ,
+      { $addFields: { result: { $regexMatch: { input: "$categoryname", regex:searchtxt,options: "i" } } } },
+      {"$match":{"result":true}},
+  
+  
+    
+  
+       ],  function(err, result){
+           //  res.status({result})
+             res.status(200).json({result});
+          
+      })
+  
+    
+  }
+
 
 
 })
@@ -372,10 +409,8 @@ router.post('/addcomment/:itemcatid',checkAuth,(req,res,next)=>{
     if (err) {
         res.send({'error':result});
     } else {
-     
-   
       //var commentlen=result[0].commentsofusers.length;
-        ItemCategories.updateOne({ "_id": itemcatid}, {$addToSet: { "comments" :  commentofUsers}}, function(err, result) {
+      ItemCategories.updateOne({ "_id": itemcatid}, {$addToSet: { "comments" :  commentofUsers}}, function(err, result) {
           console.log(err) 
             //  console.log(result)
           if (err!=null) {

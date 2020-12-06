@@ -27,15 +27,17 @@ router.post('/addtocart',checkAuth,(req,res,next)=>{
         error:"Please enter itemcategoryid"
     });
 }else{
+    var val = Math.floor(1000 + Math.random() * 9000);
     const cartitemsdata=new Cart({
         _id:mongoose.Types.ObjectId(),
         userid:req.body.userid,
         cartitems:req.body.cartitems,
         status:'pending',
         type:req.body.type,
+        date:req.body.date,
+        time:req.body.time,
+        randomid:val,
         totalprice:req.body.totalprice,
-    
-      
     });
     cartitemsdata.save().then(result=>{
         console.log(result);
@@ -57,6 +59,58 @@ router.post('/addtocart',checkAuth,(req,res,next)=>{
 });
 
 
+
+
+  //get delivery or takeaway
+  router.get('/gettypes/:type',(req,res,next)=>{
+    Cart.find({ "type": req.params.type})
+    .exec()
+    .then(docs=>{
+        res.status(200).json({
+          
+            types:docs.map(doc=>{
+                return{
+                     type_result:doc
+                   
+                }
+            })
+        })
+    })
+  })
+
+
+  //get change status
+  router.get('/changestatus/:itemid/status/:status',(req,res,next)=>{
+    const itemid=req.params.itemid
+    const status=req.params.status
+
+    Cart.find({ "_id": itemid},  function(err, result) {
+        if (err) {
+            res.send({'error':result});
+        } else {
+        
+
+            Cart.updateOne({ "_id": itemid}, {$set: { "status" :  status}}, function(err, result) {
+              console.log(err) 
+                //  console.log(result)
+              if (err!=null) {
+                console.log('kkk')
+                res.status(200).json({error:'An error has occurred'});
+              } else {
+                console.log('lll')
+                //if update update islike parametor
+              
+                 //consolele.log("kki")
+                  res.status(200).json({
+                      result:"success",
+                      message:"Updated"
+                  });
+    
+              }
+            });
+          }
+      });
+  })
 
 
 

@@ -11,6 +11,8 @@ const userRoutes = require("./api/routes/users");
  const itemcategoriesRoutes = require("./api/routes/itemcategories");
 const likes = require("./api/routes/likes");
 const cart = require("./api/routes/cart");
+const address = require("./api/routes/address");
+const datetime = require("./api/routes/datetime");
 
 
 mongoose
@@ -50,6 +52,8 @@ app.use("/users", userRoutes);
  app.use("/itemscategory",itemcategoriesRoutes)
 app.use("/likes",likes)
 app.use("/cart",cart)
+app.use("/address",address)
+app.use("/datetime",datetime)
 
 
 app.use((req, res, next) => {
