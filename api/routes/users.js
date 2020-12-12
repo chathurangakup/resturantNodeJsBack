@@ -218,7 +218,31 @@ router.post('/signup',(req,res,next)=>{
                 }); 
             }else{
 
-          
+              const user=new Users({
+                _id: new mongoose.Types.ObjectId(),
+                firstName: req.body.firstName,
+                lastName:req.body.lastName,
+                phoneno:req.body.phoneno,
+                email:req.body.email,
+                password:hash,
+                date:req.body.date
+      
+               
+              });
+              user.save()
+              .then(docs=>{
+                  if(docs){
+                    res.status(201).json({
+                        result:"success",
+                        status:"create",
+                        message:"Succesfully email has created",
+                        createPro:user
+                      }) 
+                  }  
+            }).catch(err=>{
+              console.log(err)
+            });
+             
                 
                
             }
