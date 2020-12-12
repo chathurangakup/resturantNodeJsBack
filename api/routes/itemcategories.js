@@ -135,6 +135,7 @@ const uploadCategoryImage = async (req, res, next) => {
           as: "likes",
           // localField: "_id",
           // foreignField: "itemcategoryid",
+         
           let:{itemcategoryid:'$_id',userid: mongoose.Types.ObjectId(useridd)},
           pipeline:[
               {$match:{
@@ -146,7 +147,9 @@ const uploadCategoryImage = async (req, res, next) => {
           ],
       },
       },//end lookup
-
+      {
+        $sort : { categoryname : 1 } ,
+      },
       {
           $match: {
             itemid:  mongoose.Types.ObjectId(itemidd),

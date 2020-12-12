@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const fs = require('fs');
 
 const ItemsNames = require('../models/items');
+const Itemcategories = require('../models/itemcategories');
 const Users = require('../models/users');
 const checkAuth=require('../middleware/check-auth');
 
@@ -44,25 +45,70 @@ router.post('/addItemName',checkAuth,(req,res,next)=>{
 
 
 
+//delete itemsm
+router.get('/deleteItems/:itemid',checkAuth,(req,res,next)=>{
+    const itemid=req.params.itemid
+    ItemsNames.remove({ "_id": itemid}, function(err, result) {
+        if (err!=null) {
+            res.status(200).json({error:'An error has occurred'});
+          } else {
+
+            Itemcategories.remove({ "itemid": itemid}, function(err, result) {
+                if (err!=null) {
+                    res.status(200).json({error:'An error has occurred'});
+                  } else {
+                           res.status(200).json({
+                                result:"success",
+                                message:"Deleted all menu categories"
+                            });
+                  }
+            });
+
+            
+          }
+    });
+    
+ });
+
+
+
+
 //get all items
 router.get('/allmenuitems',(req,res,next)=>{
-    ItemsNames.find()
-    .exec()
-    .then(docs=>{
-        console.log(docs.length)
-     
-      const reversed = docs.reverse();
-        res.status(200).json({
-            count:reversed.length,
-            items:reversed.map(doc=>{
-                return{
-                     menuItemsId:doc._id,
-                     menuItemsName:doc.itemname,
-                   
-                }
+
+
+    ItemsNames.aggregate(
+        [
+          { $sort : { menuItemsName : 1 } }
+        ],  function(err, result){
+            res.send({
+                items:result.map(doc=>{
+                                return{
+                                     menuItemsId:doc._id,
+                                     menuItemsName:doc.itemname,
+                                   
+                                }
+                            })
             })
-        })
-    })
+        });
+
+    // ItemsNames.find({}, { array_field: { $slice: 1 } })
+    // .exec()
+    // .then(docs=>{
+    //     console.log(docs.length)
+     
+    //   const reversed = docs.reverse();
+    //     res.status(200).json({
+    //         count:reversed.length,
+    //         items:reversed.map(doc=>{
+    //             return{
+    //                  menuItemsId:doc._id,
+    //                  menuItemsName:doc.itemname,
+                   
+    //             }
+    //         })
+    //     })
+    // })
 })
 
 

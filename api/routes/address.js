@@ -12,7 +12,7 @@ const checkAuth=require('../middleware/check-auth');
 
 
 //save plant details from user
-router.post('/addAddress',checkAuth,(req,res,next)=>{
+router.post('/addAddress',(req,res,next)=>{
    
     if(req.body.address==undefined){
            res.status(500).json({
