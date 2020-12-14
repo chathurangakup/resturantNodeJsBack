@@ -287,7 +287,8 @@ router.get('/getalllikesitems/userid/:userid/search/:searchtxt?',(req,res,next)=
       // { $addFields: { result: { $regexMatch: { input: "$categoryname", regex:searchtxt,options: "i" } } } },
       // {"$match":{"result":true}},
   
-  
+      { $addFields: { size:  { $size:"$comments" } }},
+      { $addFields: { review:  {$divide: [ { $sum:"$comments.rating" }, 1]}  } },
     
   
        ],  function(err, result){

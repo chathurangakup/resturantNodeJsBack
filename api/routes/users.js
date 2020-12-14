@@ -267,13 +267,14 @@ router.post('/signup',(req,res,next)=>{
         as: "addresses",
         // localField: "_id",
         // foreignField: "itemcategoryid",
-        let:{isdefault:true},
+        let:{isdefault:true,userid:useridd},
         pipeline:[
             {$match:{
               $expr:{$eq: ['$isdefault', "$$isdefault"]},
             }},
-           
-          
+            {$match:{
+              $expr:{$eq: ['$userid',mongoose.Types.ObjectId(useridd)]},
+            }},
         ],
        
     },
@@ -297,6 +298,7 @@ router.post('/signup',(req,res,next)=>{
         firstName: 1,
         lastName: 1,
         email:1,
+        phoneno:1,
         addresses: "$addresses.address" ,
        
    
@@ -321,6 +323,63 @@ router.post('/signup',(req,res,next)=>{
      
  });
   });
+
+
+  //update users
+ router.post('/updateuserdetails',(req,res,next)=>{
+  const userid=req.body.userid
+  const addpassword=req.body.password
+  
+  Users.find(
+      {"_id":userid},  
+  )
+.exec()
+.then(docs=>{
+    
+    if(docs){
+       bcrypt.hash(addpassword, saltRounds, function(err, hash) {
+         if(err){
+          res.status(401).json({
+              result:"error",
+              message:"uerdetails error"
+          }); 
+         }else{
+          Users.update(
+              {"_id":userid},
+              {$set: {
+                "firstName":req.body.firstName,
+                "lastName":req.body.lastName,
+                "phoneno":req.body.phoneno,
+                "password":hash
+              }}
+          )
+        .exec()
+        .then(docs=>{
+          if(docs){
+             
+             //consolele.log("kki")
+              res.status(200).json({
+                   result:"success",
+                  message:"updated user details"
+              });
+            }else{
+              res.status(404).json({message:"No valid value"});
+            }
+          }).catch(err=>{
+              console.log(err)
+            });
+       
+          }
+      });
+     
+    }else{
+      res.status(404).json({message:"No valid value"});
+    }
+    }).catch(err=>{
+        console.log(err)
+   });
+});
+
 
 
 module.exports=router;
