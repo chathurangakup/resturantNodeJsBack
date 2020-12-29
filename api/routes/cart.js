@@ -36,6 +36,7 @@ router.post('/addtocart',checkAuth,(req,res,next)=>{
         type:req.body.type,
         date:req.body.date,
         time:req.body.time,
+        image:req.body.image,
         randomid:val,
         totalprice:req.body.totalprice,
     });

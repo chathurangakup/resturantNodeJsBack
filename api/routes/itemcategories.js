@@ -552,6 +552,32 @@ const varientidd=req.params.varientid
 })
 
 
+//delete itemCategory
+router.get('/deleteItemsCat/:itemCatid',checkAuth,(req,res,next)=>{
+  const itemCatid=req.params.itemCatid
+
+  ItemCategories.remove({ "_id": itemCatid}, function(err, result) {
+    if (err!=null) {
+        res.status(200).json({error:'An error has occurred'});
+      } else {
+               res.status(200).json({
+                    result:"success",
+                    message:"Deleted all menu categories"
+                });
+      }
+});
+
+
+  // ItemsNames.remove({ "_id": itemid}, function(err, result) {
+  //     if (err!=null) {
+  //         res.status(200).json({error:'An error has occurred'});
+  //       } else {
+  //       }
+  // });
+  
+});
+
+
 
 
 
