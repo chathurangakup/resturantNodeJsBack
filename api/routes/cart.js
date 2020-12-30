@@ -36,7 +36,7 @@ router.post('/addtocart',checkAuth,(req,res,next)=>{
         type:req.body.type,
         date:req.body.date,
         time:req.body.time,
-        image:req.body.image,
+        address:req.body.address,
         randomid:val,
         totalprice:req.body.totalprice,
     });
@@ -44,7 +44,7 @@ router.post('/addtocart',checkAuth,(req,res,next)=>{
         console.log(result);
         res.status(201).json({
             result:"Success",
-            data:result
+          
         }
         );
       }).catch(err=>{
@@ -63,8 +63,8 @@ router.post('/addtocart',checkAuth,(req,res,next)=>{
 
 
   //get delivery or takeaway
-  router.get('/gettypes/:type',(req,res,next)=>{
-    Cart.find({ "type": req.params.type})
+  router.get('/gettypes/:type/userid/:userid',(req,res,next)=>{
+    Cart.find({ "type": req.params.type,"userid":req.params.userid})
     .exec()
     .then(docs=>{
         res.status(200).json({
