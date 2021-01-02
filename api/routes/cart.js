@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const fs = require('fs');
+const Pusher = require("pusher");
 
 const ItemsNames = require('../models/items');
 const Likes = require('../models/likes');
@@ -9,6 +10,14 @@ const Likes = require('../models/likes');
  const Cart = require('../models/cart');
 const Users = require('../models/users');
 const checkAuth=require('../middleware/check-auth');
+
+const pusher = new Pusher({
+    appId: "1131473",
+    key: "27dfe9a48f11cf0eb456",
+    secret: "b44e2470a0fd87f1bd95",
+    cluster: "ap2",
+    useTLS: true
+  });
 
 
 //save plant details from user
@@ -42,9 +51,11 @@ router.post('/addtocart',checkAuth,(req,res,next)=>{
     });
     cartitemsdata.save().then(result=>{
         console.log(result);
+        pusher.trigger("my-channel", "my-event", {
+            type:req.body.type
+          });
         res.status(201).json({
             result:"Success",
-          
         }
         );
       }).catch(err=>{
@@ -78,6 +89,24 @@ router.post('/addtocart',checkAuth,(req,res,next)=>{
         })
     })
   })
+
+
+  //get delivery or takeaway by admin
+  router.get('/gettypes/:type',(req,res,next)=>{
+    const type=req.params.type
+    Cart.aggregate([
+        {
+         $match: { "type":type},
+       },
+       {
+        $sort : { userid : 1 } ,
+      },
+],  function(err, result){
+        res.send({result})
+    })
+})
+
+
 
 
   //get change status
