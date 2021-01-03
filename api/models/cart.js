@@ -11,6 +11,7 @@ const dataSchema=mongoose.Schema({
     time:{type:String,require:true},
     address:{type:String,require:true},
     totalprice:{type:String,require:true},
+    isdisplay:{type:Boolean,require:true},
     
 
   

@@ -350,12 +350,22 @@ router.get('/getalllikesitems/userid/:userid/search/:searchtxt?',(req,res,next)=
 //get itemmenucategory data by _id
 router.get('/getuniqueitemcat/:menucatid',(req,res,next)=>{
   const menucatid=req.params.menucatid
+
+  ItemCategories.aggregate([
+    {
+    "$match":{"_id":mongoose.Types.ObjectId(menucatid)},
+   }
+],  function(err, result){
+           //  res.status({result})
+             res.status(200).json({result});
+          
+   })
  
-  ItemCategories.find({ "_id": menucatid},  function(err, result) {
-      if (err) {
-          res.send({'error':result});
-      } else {
-      
+  // ItemCategories.find({ "_id": menucatid},  function(err, result) {
+  //     if (err) {
+  //         res.send({'error':result});
+  //     } else {
+  //       console.log(result)
       
 
               // for(var j=0;j<resultlikes.length;j++){
@@ -383,12 +393,12 @@ router.get('/getuniqueitemcat/:menucatid',(req,res,next)=>{
       
                   // }
           
-              res.send({result})
+  //             res.send({result})
              
         
-        console.log(result)
-      }
-  });
+  //       console.log(result)
+  //     }
+  // });
 
 })
 

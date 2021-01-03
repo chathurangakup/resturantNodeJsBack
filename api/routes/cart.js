@@ -48,6 +48,7 @@ router.post('/addtocart',checkAuth,(req,res,next)=>{
         address:req.body.address,
         randomid:val,
         totalprice:req.body.totalprice,
+        isdisplay:true
     });
     cartitemsdata.save().then(result=>{
         console.log(result);
@@ -139,6 +140,63 @@ router.post('/addtocart',checkAuth,(req,res,next)=>{
               }
             });
           }
+      });
+  })
+
+
+  //get change isdisplay
+  router.get('/changeisdisplay/:itemid',(req,res,next)=>{
+    const itemid=req.params.itemid
+    const status=req.params.status
+
+    Cart.find({ "_id": itemid},  function(err, result) {
+      var isdisplayvar=false;
+        if (err) {
+            res.send({'error':result});
+        } else {
+        console.log(result[0].isdisplay)
+        if(result[0].isdisplay==false){
+          Cart.updateOne({ "_id": mongoose.Types.ObjectId(itemid)}, {$set: { "isdisplay" : 'true'}}, function(err, result) {
+            console.log(err) 
+              //  console.log(result)
+            if (err!=null) {
+              console.log('kkk')
+              res.status(200).json({error:'An error has occurred'});
+            } else {
+              console.log('lll')
+              //if update update islike parametor
+            
+               //consolele.log("kki")
+                res.status(200).json({
+                    result:"success",
+                    message:"Updated"
+                });
+  
+            }
+          });
+
+        }else{
+          Cart.updateOne({ "_id": mongoose.Types.ObjectId(itemid)}, {$set: { "isdisplay" :  'false'}}, function(err, result) {
+            console.log(err) 
+              //  console.log(result)
+            if (err!=null) {
+              console.log('kkk')
+              res.status(200).json({error:'An error has occurred'});
+            } else {
+              console.log('lll')
+              //if update update islike parametor
+            
+               //consolele.log("kki")
+                res.status(200).json({
+                    result:"success",
+                    message:"Updated"
+                });
+  
+            }
+          });
+
+        }
+       }
       });
   })
 
