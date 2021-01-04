@@ -428,7 +428,7 @@ router.post('/addcomment/:itemcatid',checkAuth,(req,res,next)=>{
           console.log(err) 
             //  console.log(result)
           if (err!=null) {
-            console.log('kkk')
+           
             res.status(200).json({error:'An error has occurred'});
           } else {
             console.log('lll')
