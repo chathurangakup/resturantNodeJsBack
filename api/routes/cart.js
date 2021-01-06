@@ -22,7 +22,10 @@ const pusher = new Pusher({
 
 //save plant details from user
 router.post('/addtocart',checkAuth,(req,res,next)=>{
-   
+  let date_ob = new Date();
+  let hours = date_ob.getHours();
+  let minutes = date_ob.getMinutes();
+
  if(req.body.userid==undefined){
         res.status(500).json({
             error:"Please enter userid"
@@ -41,10 +44,11 @@ router.post('/addtocart',checkAuth,(req,res,next)=>{
         _id:mongoose.Types.ObjectId(),
         userid:req.body.userid,
         cartitems:req.body.cartitems,
-        status:'pending',
+        status:'Pending',
         type:req.body.type,
         date:req.body.date,
         time:req.body.time,
+        ordertime:hours + ":" + minutes,
         address:req.body.address,
         randomid:val,
         totalprice:req.body.totalprice,

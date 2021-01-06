@@ -9,6 +9,7 @@ const dataSchema=mongoose.Schema({
     type:{type:String,require:true},
     date:{type:String,require:true},
     time:{type:String,require:true},
+    ordertime:{type:String,require:true},
     address:{type:String,require:true},
     totalprice:{type:String,require:true},
     isdisplay:{type:Boolean,require:true},
