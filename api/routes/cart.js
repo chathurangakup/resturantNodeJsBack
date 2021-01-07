@@ -22,19 +22,19 @@ const pusher = new Pusher({
 
 //save plant details from user
 router.post('/addtocart',checkAuth,(req,res,next)=>{
-  let now = new Date();
-  var hour    = now.getHours();
-  var minute  = now.getMinutes();
+//   let now = new Date();
+//   var hour    = now.getHours();
+//   var minute  = now.getMinutes();
 
-  if(hour.toString().length == 1) {
-    hour = '0'+hour;
-}
-if(minute.toString().length == 1) {
-    minute = '0'+minute;
-}
+//   if(hour.toString().length == 1) {
+//     hour = '0'+hour;
+// }
+// if(minute.toString().length == 1) {
+//     minute = '0'+minute;
+// }
 
 
-console.log(hour+":"+minute)
+
 
  if(req.body.userid==undefined){
         res.status(500).json({
@@ -58,7 +58,7 @@ console.log(hour+":"+minute)
         type:req.body.type,
         date:req.body.date,
         time:req.body.time,
-        ordertime:hour + ":" + minute,
+        ordertime:req.body.ordertime,
         address:req.body.address,
         randomid:val,
         totalprice:req.body.totalprice,
