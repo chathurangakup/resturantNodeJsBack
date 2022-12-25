@@ -4,7 +4,9 @@ const bodyParser = require('body-parser')
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 
-var url="mongodb+srv://uditha:0HKByXOFJaBQOKfe@cluster0.t6pkg.mongodb.net/resturantdb?retryWrites=true&w=majority"
+var url="mongodb+srv://uditha:tgGoV07wfdhvPofU@cluster0.t6pkg.mongodb.net/?retryWrites=true&w=majority";
+
+
 
 const userRoutes = require("./api/routes/users");
  const itemsRoutes = require("./api/routes/items");
