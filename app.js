@@ -4,13 +4,13 @@ const bodyParser = require('body-parser')
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 
-var url="mongodb+srv://uditha:tgGoV07wfdhvPofU@cluster0.t6pkg.mongodb.net/?retryWrites=true&w=majority";
-
+// var url="mongodb+srv://uditha:tgGoV07wfdhvPofU@cluster0.t6pkg.mongodb.net/?retryWrites=true&w=majority";
+var url='mongodb+srv://uditha:tgGoV07wfdhvPofU@cluster0.t6pkg.mongodb.net/resturantdb';
 
 
 const userRoutes = require("./api/routes/users");
- const itemsRoutes = require("./api/routes/items");
- const itemcategoriesRoutes = require("./api/routes/itemcategories");
+const itemsRoutes = require("./api/routes/items");
+const itemcategoriesRoutes = require("./api/routes/itemcategories");
 const likes = require("./api/routes/likes");
 const cart = require("./api/routes/cart");
 const address = require("./api/routes/address");
